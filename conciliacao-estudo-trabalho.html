@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho vs Estudos | helorganization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="relative min-h-screen pb-16">
+
+    <canvas id="glitter-canvas"></canvas>
+
+    <nav class="relative z-10 pt-6 px-4 max-w-5xl mx-auto flex items-center justify-between">
+        <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:text-white text-xs font-semibold transition-all hover:bg-purple-900/60">
+            <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+        </a>
+        <span class="pixel-font text-xs text-purple-400">helorganization</span>
+    </nav>
+
+    <header class="relative z-10 pt-8 pb-6 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <span class="px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+                Gestão de Tempo
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white title-glow mt-3 mb-4">
+                Conflito de Energia: Trabalho vs. Estudos
+            </h1>
+            <p class="text-purple-300/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                Estratégias avançadas para gerenciar a fadiga de decisão e manter alta performance contínua sem esgotar sua saúde mental.
+            </p>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 space-y-8">
+
+        <!-- ILUSTRAÇÃO SVG -->
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center justify-center border border-purple-500/30">
+            <svg class="w-full max-w-md h-48 sm:h-64" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="500" height="300" rx="16" fill="#180C2E"/>
+                <!-- Bateria Trabalho -->
+                <rect x="100" y="100" width="120" height="100" rx="10" stroke="#6B46C1" stroke-width="3" fill="#2A1B4E"/>
+                <rect x="110" y="110" width="40" height="80" rx="6" fill="#9F7AEA"/>
+                <text x="160" y="230" text-anchor="middle" fill="#E9D8FD" font-family="Plus Jakarta Sans" font-size="12">Trabalho (Dia)</text>
+                
+                <!-- Conector -->
+                <path d="M230 150 H270" stroke="#E9D8FD" stroke-width="4" stroke-dasharray="4 4"/>
+                
+                <!-- Bateria Estudos -->
+                <rect x="280" y="100" width="120" height="100" rx="10" stroke="#6B46C1" stroke-width="3" fill="#2A1B4E"/>
+                <rect x="290" y="110" width="80" height="80" rx="6" fill="#38A169"/>
+                <text x="340" y="230" text-anchor="middle" fill="#E9D8FD" font-family="Plus Jakarta Sans" font-size="12">Estudos (Noite)</text>
+            </svg>
+        </div>
+
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-battery-quarter text-amber-400"></i> Entendendo a Fadiga de Decisão
+            </h2>
+            <p class="text-purple-200/90 text-sm sm:text-base leading-relaxed">
+                Ao longo de uma jornada de trabalho de 8 horas, você toma milhares de decisões conscientes e inconscientes. À noite, seu reservatório de força de vontade está no nível mínimo. Tentar estudar matérias teóricas densas nesse estado resulta em baixa retenção e frustração.
+            </p>
+        </section>
+
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-sliders text-purple-400"></i> Arquitetura da Rotina Dupla
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-purple-950/50 p-5 rounded-xl border border-purple-500/20">
+                    <h3 class="text-lg font-bold text-purple-200 mb-2"><i class="fa-solid fa-sun text-amber-300 mr-2"></i>Turno Invertido (Golden Hour)</h3>
+                    <p class="text-purple-300/80 text-sm leading-relaxed">
+                        Acorde 1 hora mais cedo e estude o tópico principal do dia com o cérebro descansado, **antes** de responder qualquer e-mail ou mensagem de trabalho.
+                    </p>
+                </div>
+
+                <div class="bg-purple-950/50 p-5 rounded-xl border border-purple-500/20">
+                    <h3 class="text-lg font-bold text-purple-200 mb-2"><i class="fa-solid fa-moon text-indigo-300 mr-2"></i>Rituais de Descompressão</h3>
+                    <p class="text-purple-300/80 text-sm leading-relaxed">
+                        Crie uma pausa obrigatória de 30 minutos entre o trabalho e o estudo (banho gelado, caminhada curta ou refeição leve) para "resetar" o cérebro.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>initGlitterEffect();</script>
+</body>
+</html>

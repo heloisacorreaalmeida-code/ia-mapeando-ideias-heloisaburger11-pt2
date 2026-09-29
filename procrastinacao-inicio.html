@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superando a Procrastinação | helorganization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="relative min-h-screen pb-16">
+
+    <canvas id="glitter-canvas"></canvas>
+
+    <!-- Navegação -->
+    <nav class="relative z-10 pt-6 px-4 max-w-5xl mx-auto flex items-center justify-between">
+        <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:text-white text-xs font-semibold transition-all hover:bg-purple-900/60">
+            <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+        </a>
+        <span class="pixel-font text-xs text-purple-400">helorganization</span>
+    </nav>
+
+    <!-- Cabeçalho -->
+    <header class="relative z-10 pt-8 pb-6 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <span class="px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+                Foco & Mente
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white title-glow mt-3 mb-4">
+                Dificuldade para Iniciar Tarefas
+            </h1>
+            <p class="text-purple-300/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                Entenda a neurociência por trás da paralisia de ação e domine metodologias científicas para vencer a resistência inicial.
+            </p>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 space-y-8">
+
+        <!-- ILUSTRAÇÃO SVG ARTÍSTICA -->
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center justify-center border border-purple-500/30">
+            <svg class="w-full max-w-md h-48 sm:h-64" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="500" height="300" rx="16" fill="#180C2E"/>
+                <circle cx="250" cy="150" r="100" stroke="#6B46C1" stroke-width="2" stroke-dasharray="8 8"/>
+                <circle cx="250" cy="150" r="70" fill="#2A1B4E" stroke="#9F7AEA" stroke-width="3"/>
+                <!-- Ampulheta Iluminada -->
+                <path d="M220 100 H280 L250 140 L220 100 Z" fill="#9F7AEA" opacity="0.8"/>
+                <path d="M220 200 H280 L250 160 L220 200 Z" fill="#6B46C1"/>
+                <circle cx="250" cy="150" r="8" fill="#E9D8FD"/>
+                <!-- Brilhos de Luz -->
+                <circle cx="150" cy="80" r="3" fill="#E9D8FD"/>
+                <circle cx="360" cy="220" r="4" fill="#9F7AEA"/>
+                <circle cx="380" cy="90" r="2" fill="#E9D8FD"/>
+                <text x="250" y="250" text-anchor="middle" fill="#E9D8FD" font-family="Plus Jakarta Sans" font-size="14" font-weight="600">Superando a Paralisia de Ação</text>
+            </svg>
+        </div>
+
+        <!-- Seção 1: O Que Acontece no Cérebro -->
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-brain text-purple-400"></i> A Neurociência da Procrastinação
+            </h2>
+            <p class="text-purple-200/90 text-sm sm:text-base leading-relaxed mb-4">
+                A procrastinação não é uma falha de caráter nem preguiça; é um conflito biológico entre duas regiões do cérebro: o **Sistema Límbico** (que busca prazer e alívio imediato) e o **Córtex Pré-Frontal** (responsável pelo planejamento e foco a longo prazo).
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                <div class="bg-purple-950/60 p-4 rounded-xl border border-purple-500/20">
+                    <h3 class="text-amber-300 font-semibold text-sm mb-1"><i class="fa-solid fa-bolt mr-1"></i> O Bloqueio da Amígdala</h3>
+                    <p class="text-purple-300/80 text-xs sm:text-sm">Quando uma tarefa parece complexa, o cérebro a interpreta como uma ameaça/estresse, acionando a esquiva automática.</p>
+                </div>
+                <div class="bg-purple-950/60 p-4 rounded-xl border border-purple-500/20">
+                    <h3 class="text-indigo-300 font-semibold text-sm mb-1"><i class="fa-solid fa-gem mr-1"></i> Ilusão da Dopamina Barata</h3>
+                    <p class="text-purple-300/80 text-xs sm:text-sm">Redes sociais oferecem recompensa instantânea sem esforço, tornando qualquer trabalho denso menos atraente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2: Estratégias Práticas -->
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-chess-knight text-indigo-400"></i> Protocolos Anti-Procrastinação
+            </h2>
+
+            <div class="space-y-6">
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-xl bg-purple-800/50 border border-purple-400/30 flex items-center justify-center text-purple-200 font-bold shrink-0">1</div>
+                    <div>
+                        <h3 class="text-purple-200 font-bold text-base mb-1">A Regra dos 5 Minutos (Micro-Comprometimento)</h3>
+                        <p class="text-purple-300/80 text-sm leading-relaxed">
+                            Diga a si mesmo que irá trabalhar no projeto por **apenas 5 minutos**. Se desejar parar depois, está liberado. Em 80% dos casos, quebrar a inércia é o suficiente para engajar o estado de fluxo (*flow*).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-xl bg-purple-800/50 border border-purple-400/30 flex items-center justify-center text-purple-200 font-bold shrink-0">2</div>
+                    <div>
+                        <h3 class="text-purple-200 font-bold text-base mb-1">Micro-Divisão Atomic de Tarefas</h3>
+                        <p class="text-purple-300/80 text-sm leading-relaxed">
+                            Substitua objetivos genéricos como "Escrever relatório" por ações físicas ultraespecíficas: "Abrir o Google Docs e digitar o título da Seção 1".
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 items-start">
+                    <div class="w-10 h-10 rounded-xl bg-purple-800/50 border border-purple-400/30 flex items-center justify-center text-purple-200 font-bold shrink-0">3</div>
+                    <div>
+                        <h3 class="text-purple-200 font-bold text-base mb-1">Ritual de Transição do Ambiente</h3>
+                        <p class="text-purple-300/80 text-sm leading-relaxed">
+                            Crie gatilhos sensoriais que avisem seu cérebro que o momento de focar começou: uma playlist específica, fones de ouvido e mesa 100% limpa.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Cronograma de Implementação -->
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-list-check text-emerald-400"></i> Plano de Ação Passo a Passo
+            </h2>
+            <ul class="space-y-3 text-sm text-purple-200/90">
+                <li class="flex items-center gap-3 bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <i class="fa-regular fa-circle-check text-emerald-400 text-base"></i>
+                    <span><strong>Passo 1:</strong> Escolha a tarefa que você mais está adiando hoje.</span>
+                </li>
+                <li class="flex items-center gap-3 bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <i class="fa-regular fa-circle-check text-emerald-400 text-base"></i>
+                    <span><strong>Passo 2:</strong> Elimine todas as abas desnecessárias e coloque o celular em outro cômodo.</span>
+                </li>
+                <li class="flex items-center gap-3 bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <i class="fa-regular fa-circle-check text-emerald-400 text-base"></i>
+                    <span><strong>Passo 3:</strong> Configure um timer para 15 minutos e execute apenas o primeiro passo.</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Inicializa o efeito glitter no canvas
+        initGlitterEffect();
+    </script>
+</body>
+</html>

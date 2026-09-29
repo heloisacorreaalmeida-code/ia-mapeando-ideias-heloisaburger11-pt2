@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Prazos | helorganization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="relative min-h-screen pb-16">
+
+    <canvas id="glitter-canvas"></canvas>
+
+    <nav class="relative z-10 pt-6 px-4 max-w-5xl mx-auto flex items-center justify-between">
+        <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-950/60 border border-purple-500/30 text-purple-300 hover:text-white text-xs font-semibold transition-all hover:bg-purple-900/60">
+            <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+        </a>
+        <span class="pixel-font text-xs text-purple-400">helorganization</span>
+    </nav>
+
+    <header class="relative z-10 pt-8 pb-6 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <span class="px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+                Trabalho
+            </span>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white title-glow mt-3 mb-4">
+                Ansiedade com Prazos e Sobrecarga
+            </h1>
+            <p class="text-purple-300/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                Transforme o estresse da data limite em um plano de entrega estruturado com cronograma reverso.
+            </p>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-4xl mx-auto px-4 space-y-8">
+
+        <!-- ILUSTRAÇÃO SVG -->
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center justify-center border border-purple-500/30">
+            <svg class="w-full max-w-md h-48 sm:h-64" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="500" height="300" rx="16" fill="#180C2E"/>
+                <!-- Calendário Neon -->
+                <rect x="160" y="80" width="180" height="140" rx="10" stroke="#9F7AEA" stroke-width="3" fill="#2A1B4E"/>
+                <path d="M160 110 H340" stroke="#9F7AEA" stroke-width="2"/>
+                <circle cx="190" cy="95" r="4" fill="#E9D8FD"/>
+                <circle cx="310" cy="95" r="4" fill="#E9D8FD"/>
+                <!-- Destaque Data -->
+                <rect x="260" y="150" width="30" height="30" rx="6" fill="#E53E3E"/>
+                <text x="275" y="170" text-anchor="middle" fill="white" font-family="Plus Jakarta Sans" font-weight="bold" font-size="12">28</text>
+            </svg>
+        </div>
+
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border border-purple-500/20">
+            <h2 class="text-xl sm:text-2xl font-bold text-purple-100 mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-calendar-week text-indigo-400"></i> Técnica do Planejamento Reverso
+            </h2>
+            <p class="text-purple-200/90 text-sm sm:text-base leading-relaxed">
+                Em vez de planejar a partir de hoje em direção ao prazo, comece **da data final para trás**. Mapeie a última etapa necessária e calcule os dias necessários para cada sub-etapa, deixando 20% de margem de segurança para imprevistos.
+            </p>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>initGlitterEffect();</script>
+</body>
+</html>

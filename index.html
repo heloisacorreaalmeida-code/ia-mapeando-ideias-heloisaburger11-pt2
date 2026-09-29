@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>helorganization: rotinas de estudos e trabalhos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Pixel Font & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-purple-100 min-h-screen pb-16 relative">
+
+    <!-- Canvas de Efeito Glitter/Partículas -->
+    <canvas id="glitter-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <header class="relative z-10 pt-8 pb-6 px-4 text-center">
+        <div class="max-w-5xl mx-auto">
+            <div class="inline-block mb-3 px-4 py-1.5 rounded-full bg-purple-900/50 border border-purple-500/30 text-purple-300 text-xs tracking-widest uppercase">
+                <i class="fa-solid fa-sparkles text-amber-300 mr-2"></i>Organizador Pessoal de Rotina
+            </div>
+            
+            <h1 class="pixel-font text-2xl sm:text-3xl md:text-4xl text-purple-200 title-glow tracking-wider leading-relaxed my-2">
+                helorganization
+            </h1>
+            <p class="text-purple-300/80 text-sm md:text-base font-light max-w-2xl mx-auto mt-2">
+                rotinas de estudos e trabalhos
+            </p>
+            <p class="text-xs text-purple-400/60 mt-1">Identifique seus desafios, aplique estratégias validadas e supere os obstáculos do seu dia a dia.</p>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+        
+        <!-- Barra de Ferramentas: Filtros + Busca + Botão Criar -->
+        <div class="glass-card p-4 sm:p-6 rounded-2xl mb-8 border border-purple-500/20 bg-purple-950/40 backdrop-blur-md">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                
+                <!-- Busca -->
+                <div class="relative w-full lg:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar problema ou dica..." 
+                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-purple-950/80 border border-purple-500/30 text-purple-100 placeholder-purple-400/60 text-sm focus:outline-none focus:border-purple-400 transition-colors">
+                </div>
+
+                <!-- Filtros por Categoria -->
+                <div class="flex flex-wrap items-center justify-center gap-2 w-full lg:w-auto" id="categoryFilters">
+                    <button data-category="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-purple-600 text-white border border-purple-400/40 shadow-sm transition-all">
+                        Todas
+                    </button>
+                    <button data-category="Estudos" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/40 text-purple-300 border border-purple-500/20 hover:border-purple-400/40 hover:bg-purple-900/40 transition-all">
+                        <i class="fa-solid fa-book-open text-xs mr-1.5"></i>Estudos
+                    </button>
+                    <button data-category="Trabalho" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/40 text-purple-300 border border-purple-500/20 hover:border-purple-400/40 hover:bg-purple-900/40 transition-all">
+                        <i class="fa-solid fa-briefcase text-xs mr-1.5"></i>Trabalho
+                    </button>
+                    <button data-category="Foco & Mente" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/40 text-purple-300 border border-purple-500/20 hover:border-purple-400/40 hover:bg-purple-900/40 transition-all">
+                        <i class="fa-solid fa-brain text-xs mr-1.5"></i>Foco & Mente
+                    </button>
+                    <button data-category="Gestão de Tempo" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/40 text-purple-300 border border-purple-500/20 hover:border-purple-400/40 hover:bg-purple-900/40 transition-all">
+                        <i class="fa-solid fa-clock text-xs mr-1.5"></i>Tempo
+                    </button>
+                </div>
+
+                <!-- Botão Adicionar Desafio -->
+                <button onclick="openAddModal()" class="w-full lg:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-sm flex items-center justify-center gap-2 shadow-lg shadow-purple-900/40 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>Novo Desafio</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Os cards serão injetados dinamicamente via JS -->
+        </div>
+
+        <!-- Estado Vazio para Busca sem resultados -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-900/30 text-purple-400 mb-4 border border-purple-500/20">
+                <i class="fa-solid fa-ghost text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-purple-200">Nenhum obstáculo encontrado</h3>
+            <p class="text-purple-400 text-sm mt-1">Tente mudar o termo de busca ou ajustar os filtros.</p>
+        </div>
+    </main>
+
+    
+    <!-- MODAL DE CHECKLIST RÁPIDO (OPCIONAL) -->
+    <div id="problemModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 overflow-y-auto bg-black/80 backdrop-blur-sm">
+        <div class="glass-card max-w-2xl w-full rounded-2xl border border-purple-400/30 bg-purple-950 p-6 sm:p-8 relative shadow-2xl my-8">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-purple-300/70 hover:text-white w-8 h-8 rounded-full bg-purple-900/60 flex items-center justify-center border border-purple-500/20 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-start gap-4 mb-6">
+                <div id="modalIcon" class="w-12 h-12 rounded-xl bg-purple-800/50 border border-purple-400/30 flex items-center justify-center text-purple-200 text-xl shrink-0">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div>
+                    <span id="modalCategory" class="inline-block px-2.5 py-0.5 rounded-md bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-medium mb-1">
+                        Categoria
+                    </span>
+                    <h2 id="modalTitle" class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                        Título do Problema
+                    </h2>
+                </div>
+            </div>
+
+            <div class="space-y-6 text-sm">
+                <div class="border-t border-purple-500/20 pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="text-purple-200 font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-emerald-400"></i> Plano de Ação Prático
+                        </h4>
+                        <span id="progressText" class="text-xs text-purple-300 font-mono bg-purple-900/60 px-2 py-0.5 rounded">0/0 concluídos</span>
+                    </div>
+
+                    <div class="w-full h-2 bg-purple-950 rounded-full overflow-hidden mb-4 border border-purple-500/20">
+                        <div id="progressBar" class="h-full bg-gradient-to-r from-purple-500 to-emerald-400 transition-all duration-300 w-0"></div>
+                    </div>
+
+                    <div id="modalChecklist" class="space-y-2.5">
+                        <!-- Itens inseridos via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-purple-500/20 flex items-center justify-between">
+                <a id="modalDeepDiveBtn" href="#" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 border border-purple-400/40 text-white font-medium text-xs sm:text-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-right"></i> Ir para Página Completa
+                </a>
+                <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-purple-900/60 hover:bg-purple-800/60 border border-purple-400/30 text-purple-100 font-medium text-xs sm:text-sm transition-colors">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE ADICIONAR NOVO DESAFIO -->
+    <div id="addModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 overflow-y-auto bg-black/80 backdrop-blur-sm">
+        <div class="glass-card max-w-lg w-full rounded-2xl border border-purple-400/30 bg-purple-950 p-6 sm:p-8 relative shadow-2xl my-8">
+            <button onclick="closeAddModal()" class="absolute top-4 right-4 text-purple-300/70 hover:text-white w-8 h-8 rounded-full bg-purple-900/60 flex items-center justify-center border border-purple-500/20">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-plus-circle text-purple-400"></i> Registrar Novo Desafio
+            </h3>
+            <p class="text-xs text-purple-300/70 mb-6">Cadastre um obstáculo pessoal da sua rotina.</p>
+
+            <form id="addChallengeForm" onsubmit="handleAddNewChallenge(event)" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase tracking-wider mb-1">Título do Problema</label>
+                    <input type="text" id="newTitle" required placeholder="Ex: Dificuldade em revisar matérias" class="w-full px-3.5 py-2 rounded-xl bg-purple-900/60 border border-purple-500/30 text-purple-100 focus:outline-none focus:border-purple-400">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-purple-300 uppercase tracking-wider mb-1">Categoria</label>
+                        <select id="newCategory" class="w-full px-3.5 py-2 rounded-xl bg-purple-900 border border-purple-500/30 text-purple-100 focus:outline-none focus:border-purple-400">
+                            <option value="Estudos">Estudos</option>
+                            <option value="Trabalho">Trabalho</option>
+                            <option value="Foco & Mente">Foco & Mente</option>
+                            <option value="Gestão de Tempo">Gestão de Tempo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-purple-300 uppercase tracking-wider mb-1">Link/Página (HTML)</label>
+                        <input type="text" id="newUrl" placeholder="ex: minha-pagina.html" class="w-full px-3.5 py-2 rounded-xl bg-purple-900/60 border border-purple-500/30 text-purple-100 focus:outline-none focus:border-purple-400">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase tracking-wider mb-1">Descrição Curta</label>
+                    <textarea id="newSymptoms" rows="2" required placeholder="Resumo do obstáculo..." class="w-full px-3.5 py-2 rounded-xl bg-purple-900/60 border border-purple-500/30 text-purple-100 focus:outline-none focus:border-purple-400"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-purple-300 uppercase tracking-wider mb-1">Ações do Checklist (1 por linha)</label>
+                    <textarea id="newChecklist" rows="3" required placeholder="Passo 1&#10;Passo 2&#10;Passo 3" class="w-full px-3.5 py-2 rounded-xl bg-purple-900/60 border border-purple-500/30 text-purple-100 focus:outline-none focus:border-purple-400 font-mono text-xs"></textarea>
+                </div>
+
+                <div class="pt-2 flex gap-3 justify-end">
+                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-xl bg-purple-900/60 text-purple-300 hover:text-white border border-purple-500/20">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-medium">Salvar Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // BASE DE DADOS APONTANDO DIRETAMENTE PARA AS PÁGINAS SECUNDÁRIAS
+        const defaultProblems = [
+            {
+                id: 'procrastinacao-inicio',
+                title: 'Dificuldade para Iniciar Tarefas (Procrastinação)',
+                category: 'Foco & Mente',
+                icon: 'fa-hourglass-start',
+                pageUrl: 'procrastinacao-inicio.html',
+                shortDesc: 'A sensação de paralisia antes de abrir os livros ou iniciar um relatório importante.',
+                checklist: [
+                    'Definir a menor ação possível para começar (ex: abrir o documento).',
+                    'Afastar o celular de perto durante os primeiros 20 minutos.',
+                    'Utilizar um cronômetro para marcar um ciclo curto de foco.',
+                    'Recompensar-se brevemente após concluir o primeiro bloco.'
+                ]
+            },
+            {
+                id: 'conciliacao-estudo-trabalho',
+                title: 'Conflito de Energia: Trabalho vs. Estudos',
+                category: 'Gestão de Tempo',
+                icon: 'fa-battery-quarter',
+                pageUrl: 'conciliacao-estudo-trabalho.html',
+                shortDesc: 'Chegar do trabalho exausto e não conseguir manter o rendimento nos estudos noturnos.',
+                checklist: [
+                    'Fazer uma pausa de descompressão de 20 minutos após o trabalho.',
+                    'Beber água e fazer um lanche leve para repor energia.',
+                    'Dar prioridade para resumos interativos ou resolução de questões.',
+                    'Planejar a rotina do dia seguinte antes de dormir.'
+                ]
+            },
+            {
+                id: 'acumulo-conteudo',
+                title: 'Acúmulo de Matérias e Tarefas',
+                category: 'Estudos',
+                icon: 'fa-layer-group',
+                pageUrl: 'acumulo-conteudo.html',
+                shortDesc: 'A bola de neve de aulas pendentes, leituras atrasadas e projetos não entregues.',
+                checklist: [
+                    'Listar todas as pendências em uma única folha de papel.',
+                    'Classificar os tópicos prioritários que caem com mais frequência.',
+                    'Eliminar ou adiar o que não traz impacto direto imediato.',
+                    'Agendar 1 hora diária exclusivamente para zerar os atrasos.'
+                ]
+            },
+            {
+                id: 'distracoes-digitais',
+                title: 'Distrações Digitais e Notificações',
+                category: 'Foco & Mente',
+                icon: 'fa-mobile-screen-button',
+                pageUrl: 'distracoes-digitais.html',
+                shortDesc: 'Interrupções constantes por redes sociais, mensagens e abas infinitas no navegador.',
+                checklist: [
+                    'Colocar o celular em outro cômodo ou dentro da mochila.',
+                    'Usar extensores no navegador para bloquear sites de notícias/redes.',
+                    'Fechar todas as abas do navegador que não sejam do estudo atual.',
+                    'Ativar o modo foco no computador.'
+                ]
+            },
+            {
+                id: 'ansiedade-prazos',
+                title: 'Ansiedade com Prazos e Sobrecarga',
+                category: 'Trabalho',
+                icon: 'fa-triangle-exclamation',
+                pageUrl: 'ansiedade-prazos.html',
+                shortDesc: 'O estresse constante de datas de entrega se aproximando e a sensação de falta de controle.',
+                checklist: [
+                    'Mapear todas as datas finais num calendário visual visível.',
+                    'Definir metas diárias pequenas para não deixar nada para o último dia.',
+                    'Comunicar prazos irrealistas com antecedência a gestores/professores.',
+                    'Praticar 3 minutos de respiração diafragmática.'
+                ]
+            },
+            {
+                id: 'falta-metricas',
+                title: 'Sensação de "Não Estudei/Trabalhei o Suficiente"',
+                category: 'Gestão de Tempo',
+                icon: 'fa-chart-line',
+                pageUrl: 'falta-metricas.html',
+                shortDesc: 'Chegar ao fim do dia com a impressão de que não produziu nada, mesmo estando cansado.',
+                checklist: [
+                    'Anotar cada tarefa concluída no momento em que finalizá-la.',
+                    'Rastrear tempo real dedicado com aplicativos de time-tracking.',
+                    'Revisar a lista de conquistas do dia antes de desligar os estudos.',
+                    'Celebrar pequenos progressos semanais.'
+                ]
+            }
+        ];
+
+        let problems = [];
+        let currentFilter = 'all';
+        let searchQuery = '';
+        let activeProblemId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProblems();
+            setupEventListeners();
+            renderCards();
+        });
+
+        function loadProblems() {
+            const saved = localStorage.getItem('helo_custom_problems');
+            if (saved) {
+                try {
+                    const customProblems = JSON.parse(saved);
+                    problems = [...defaultProblems, ...customProblems];
+                } catch(e) {
+                    problems = [...defaultProblems];
+                }
+            } else {
+                problems = [...defaultProblems];
+            }
+        }
+
+        function renderCards() {
+            const container = document.getElementById('cardsGrid');
+            const emptyState = document.getElementById('emptyState');
+            container.innerHTML = '';
+
+            const filtered = problems.filter(item => {
+                const matchesCategory = currentFilter === 'all' || item.category === currentFilter;
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      item.shortDesc.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(problem => {
+                    const progress = calculateProgress(problem.id, problem.checklist);
+                    const card = document.createElement('div');
+                    card.className = 'glass-card p-6 rounded-2xl flex flex-col justify-between group relative border border-purple-500/20 bg-purple-950/40 hover:border-purple-400/50 transition-all';
+
+                    const targetUrl = problem.pageUrl || '#';
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-2.5 py-1 rounded-lg bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+                                    ${problem.category}
+                                </span>
+                                <a href="${targetUrl}" class="w-10 h-10 rounded-xl bg-purple-800/40 border border-purple-500/20 flex items-center justify-center text-purple-300 hover:text-white hover:bg-purple-700/60 transition-all">
+                                    <i class="fa-solid ${problem.icon}"></i>
+                                </a>
+                            </div>
+                            
+                            <h3 class="text-lg font-bold text-purple-100 mb-2 group-hover:text-purple-300 transition-colors leading-snug">
+                                <a href="${targetUrl}">${problem.title}</a>
+                            </h3>
+                            <p class="text-purple-300/80 text-xs sm:text-sm line-clamp-3 mb-4 leading-relaxed">
+                                ${problem.shortDesc}
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-purple-500/15 flex items-center justify-between text-xs">
+                            <button onclick="openModal('${problem.id}')" class="text-purple-400 hover:text-purple-200 transition-colors flex items-center gap-1.5" title="Abrir checklist rápido">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span>${progress.completed}/${progress.total}</span>
+                            </button>
+                            
+                            <a href="${targetUrl}" class="px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold transition-all flex items-center gap-1.5 shadow-md">
+                                <span>Acessar Conteúdo</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+        }
+
+        function calculateProgress(problemId, checklist) {
+            const savedState = JSON.parse(localStorage.getItem(`helo_chk_${problemId}`) || '{}');
+            let completed = 0;
+            if(checklist) {
+                checklist.forEach((_, idx) => {
+                    if (savedState[idx]) completed++;
+                });
+            }
+            return { completed, total: checklist ? checklist.length : 0 };
+        }
+
+        function openModal(id) {
+            const problem = problems.find(p => p.id === id);
+            if (!problem) return;
+
+            activeProblemId = id;
+            document.getElementById('modalTitle').innerText = problem.title;
+            document.getElementById('modalCategory').innerText = problem.category;
+            
+            const deepDiveBtn = document.getElementById('modalDeepDiveBtn');
+            if (problem.pageUrl) {
+                deepDiveBtn.href = problem.pageUrl;
+                deepDiveBtn.classList.remove('hidden');
+            } else {
+                deepDiveBtn.classList.add('hidden');
+            }
+
+            const iconElem = document.getElementById('modalIcon');
+            iconElem.innerHTML = `<i class="fa-solid ${problem.icon}"></i>`;
+
+            renderChecklist(problem);
+            document.getElementById('problemModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('problemModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            activeProblemId = null;
+            renderCards();
+        }
+
+        function renderChecklist(problem) {
+            const container = document.getElementById('modalChecklist');
+            container.innerHTML = '';
+            
+            const savedState = JSON.parse(localStorage.getItem(`helo_chk_${problem.id}`) || '{}');
+
+            if(problem.checklist) {
+                problem.checklist.forEach((item, index) => {
+                    const isChecked = !!savedState[index];
+                    const div = document.createElement('div');
+                    div.className = 'flex items-start gap-3 p-2.5 rounded-lg bg-purple-900/30 border border-purple-500/20 hover:bg-purple-900/50 transition-colors';
+                    
+                    div.innerHTML = `
+                        <input type="checkbox" id="chk_${index}" class="custom-checkbox mt-0.5 shrink-0" ${isChecked ? 'checked' : ''} onchange="toggleChecklist(${index})">
+                        <label for="chk_${index}" class="text-xs sm:text-sm text-purple-200 leading-snug cursor-pointer select-none ${isChecked ? 'line-through text-purple-400/70' : ''}">
+                            ${item}
+                        </label>
+                    `;
+                    container.appendChild(div);
+                });
+                updateProgressBar(problem.checklist.length);
+            }
+        }
+
+        function toggleChecklist(index) {
+            if (!activeProblemId) return;
+            const savedState = JSON.parse(localStorage.getItem(`helo_chk_${activeProblemId}`) || '{}');
+            savedState[index] = !savedState[index];
+            localStorage.setItem(`helo_chk_${activeProblemId}`, JSON.stringify(savedState));
+
+            const problem = problems.find(p => p.id === activeProblemId);
+            if (problem) {
+                renderChecklist(problem);
+            }
+        }
+
+        function updateProgressBar(total) {
+            if (!activeProblemId) return;
+            const savedState = JSON.parse(localStorage.getItem(`helo_chk_${activeProblemId}`) || '{}');
+            let completed = 0;
+            for (let i = 0; i < total; i++) {
+                if (savedState[i]) completed++;
+            }
+
+            const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = `${pct}%`;
+            document.getElementById('progressText').innerText = `${completed}/${total} concluídos (${pct}%)`;
+        }
+
+        function openAddModal() {
+            document.getElementById('addModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            document.getElementById('addChallengeForm').reset();
+        }
+
+        function handleAddNewChallenge(e) {
+            e.preventDefault();
+            const title = document.getElementById('newTitle').value.trim();
+            const category = document.getElementById('newCategory').value;
+            const pageUrl = document.getElementById('newUrl').value.trim();
+            const symptoms = document.getElementById('newSymptoms').value.trim();
+            const checklistRaw = document.getElementById('newChecklist').value.trim();
+
+            if (!title || !symptoms || !checklistRaw) return;
+
+            const checklistArr = checklistRaw.split('\n').filter(line => line.trim().length > 0);
+
+            const newProblem = {
+                id: 'custom-' + Date.now(),
+                title,
+                category,
+                icon: 'fa-star',
+                pageUrl: pageUrl || '#',
+                shortDesc: symptoms,
+                checklist: checklistArr
+            };
+
+            const customSaved = JSON.parse(localStorage.getItem('helo_custom_problems') || '[]');
+            customSaved.push(newProblem);
+            localStorage.setItem('helo_custom_problems', JSON.stringify(customSaved));
+
+            problems.push(newProblem);
+            closeAddModal();
+            renderCards();
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('bg-purple-600', 'text-white');
+                        b.classList.add('bg-purple-950/40', 'text-purple-300');
+                    });
+                    
+                    const target = e.currentTarget;
+                    target.classList.remove('bg-purple-950/40', 'text-purple-300');
+                    target.classList.add('bg-purple-600', 'text-white');
+
+                    currentFilter = target.getAttribute('data-category');
+                    renderCards();
+                });
+            });
+
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderCards();
+            });
+        }
+    </script>
+</body>
+</html>
